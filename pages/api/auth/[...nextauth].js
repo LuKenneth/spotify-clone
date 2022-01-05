@@ -52,7 +52,7 @@ export default NextAuth({
         sameSite: "lax",
         path: "/",
         secure: useSecure,
-        domain: hostName,
+        domain: hostName === "localhost" ? hostName : `.${hostName}`,
       },
       callbackUrl: {
         name: `${cookiePrefix}next-auth.callback-url`,
