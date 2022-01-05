@@ -25,11 +25,6 @@ async function refreshAccessToken(token) {
     };
   }
 }
-const hostUrl = process.env.NEXTAUTH_URL || "https://" + process.env.VERCEL_URL;
-const hostName = new URL(hostUrl).hostname;
-const useSecure = hostUrl.startsWith("https://");
-const cookiePrefix = hostName === "localhost" ? "" : "__Secure-";
-const hostCookiePrefix = hostName === "localhost" ? "" : "Host-";
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -44,57 +39,6 @@ export default NextAuth({
   secret: process.env.JWT_SECRET,
   pages: {
     signIn: "/login",
-  },
-  cookies: {
-    sessionToken: {
-      name: `${cookiePrefix}next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: useSecure,
-        domain: hostName === "localhost" ? hostName : `.${hostName}`,
-      },
-      callbackUrl: {
-        name: `${cookiePrefix}next-auth.callback-url`,
-        options: {
-          sameSite: "lax",
-          path: "/",
-          secure: useSecure,
-          domain: hostName,
-        },
-      },
-      csrfToken: {
-        name: `${hostCookiePrefix}next-auth.csrf-token`,
-        options: {
-          httpOnly: true,
-          sameSite: "lax",
-          path: "/",
-          secure: useSecure,
-          domain: hostName,
-        },
-      },
-      pkceCodeVerifier: {
-        name: `${cookiePrefix}next-auth.pkce.code_verifier`,
-        options: {
-          httpOnly: true,
-          sameSite: "lax",
-          path: "/",
-          secure: useSecure,
-          domain: hostName,
-        },
-      },
-      state: {
-        name: `${cookiePrefix}next-auth.state`,
-        options: {
-          httpOnly: true,
-          sameSite: "lax",
-          path: "/",
-          secure: useSecure,
-          domain: hostName,
-        },
-      },
-    },
   },
   callbacks: {
     async jwt({ token, account, user }) {
