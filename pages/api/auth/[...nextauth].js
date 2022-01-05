@@ -52,7 +52,7 @@ export default NextAuth({
         sameSite: "lax",
         path: "/",
         secure: useSecureCookies,
-        domain: hostName == "localhost" ? hostName : "." + hostName, // add a . in front so that subdomains are included
+        domain: hostName, // add a . in front so that subdomains are included
       },
     },
   },
