@@ -69,6 +69,26 @@ export default NextAuth({
           domain: "spotify.lukenneth.com",
         },
       },
+      pkceCodeVerifier: {
+        name: `__Secure-next-auth.pkce.code_verifier`,
+        options: {
+          httpOnly: true,
+          sameSite: "lax",
+          path: "/",
+          secure: useSecureCookies,
+          domain: "spotify.lukenneth.com",
+        },
+      },
+      state: {
+        name: `__Secure-next-auth.state`,
+        options: {
+          httpOnly: true,
+          sameSite: "lax",
+          path: "/",
+          secure: useSecureCookies,
+          domain: "spotify.lukenneth.com",
+        },
+      },
     },
   },
   callbacks: {
