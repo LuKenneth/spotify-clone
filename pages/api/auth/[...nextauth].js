@@ -31,7 +31,7 @@ const cookiePrefix = useSecureCookies ? "__Secure-" : "";
 const hostName = new URL(process.env.NEXTAUTH_URL).hostname;
 console.log("useSecureCookies", useSecureCookies);
 console.log("cookiePrefix", cookiePrefix);
-console.log("hostname", hostname);
+console.log("hostname", hostName);
 
 export default NextAuth({
   // Configure one or more authentication providers
