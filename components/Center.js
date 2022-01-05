@@ -35,7 +35,6 @@ function Center() {
           playlistId
         );
         setPlaylist(currentPlaylist);
-        console.log(currentPlaylist);
       } catch (err) {
         if (err.body.error.message === "The access token expired") {
           signIn();
