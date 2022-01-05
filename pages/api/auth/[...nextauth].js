@@ -29,6 +29,9 @@ async function refreshAccessToken(token) {
 const useSecureCookies = process.env.NEXTAUTH_URL.startsWith("https://");
 const cookiePrefix = useSecureCookies ? "__Secure-" : "";
 const hostName = new URL(process.env.NEXTAUTH_URL).hostname;
+console.log("useSecureCookies", useSecureCookies);
+console.log("cookiePrefix", cookiePrefix);
+console.log("hostname", hostname);
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -52,7 +55,7 @@ export default NextAuth({
         sameSite: "lax",
         path: "/",
         secure: useSecureCookies,
-        domain: hostName, // add a . in front so that subdomains are included
+        domain: hostName,
       },
     },
   },
