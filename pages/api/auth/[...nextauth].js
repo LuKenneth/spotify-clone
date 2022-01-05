@@ -25,7 +25,9 @@ async function refreshAccessToken(token) {
     };
   }
 }
-const hostName = new URL(process.env.NEXTAUTH_URL).hostname;
+const hostName =
+  new URL(process.env.NEXTAUTH_URL).hostname ||
+  new URL(process.env.VERCEL_URL).hostname;
 const useSecure = process.env.NEXTAUTH_URL.startsWith("https://");
 const cookiePrefix = hostName === "localhost" ? "" : "__Secure-";
 const hostCookiePrefix = hostName === "localhost" ? "" : "Host-";
