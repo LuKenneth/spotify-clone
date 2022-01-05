@@ -10,8 +10,8 @@ export async function middleware(req) {
     return NextResponse.next();
   }
 
-  if (!token && pathname !== `/login`) {
-    console.log("redirecting back to login");
+  if (!token && (pathname !== `/login` || pathname !== `/favicon.ico`)) {
+    console.log(`redirecting from ${pathname} to login`);
     return NextResponse.redirect(`/login`);
   }
 }
