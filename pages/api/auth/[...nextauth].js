@@ -26,13 +26,6 @@ async function refreshAccessToken(token) {
   }
 }
 
-const useSecureCookies = process.env.NEXTAUTH_URL.startsWith("https://");
-const cookiePrefix = useSecureCookies ? "__Secure-" : "";
-const hostName = new URL(process.env.NEXTAUTH_URL).hostname;
-console.log("useSecureCookies", useSecureCookies);
-console.log("cookiePrefix", cookiePrefix);
-console.log("hostname", hostName);
-
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -49,13 +42,32 @@ export default NextAuth({
   },
   cookies: {
     sessionToken: {
-      name: `${cookiePrefix}next-auth.session-token`,
+      name: `__Secure-next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: useSecureCookies,
-        domain: hostName,
+        secure: true,
+        domain: "spotify.lukenneth.com",
+      },
+      callbackUrl: {
+        name: `__Secure-next-auth.callback-url`,
+        options: {
+          sameSite: "lax",
+          path: "/",
+          secure: true,
+          domain: "spotify.lukenneth.com",
+        },
+      },
+      csrfToken: {
+        name: `__Host-next-auth.csrf-token`,
+        options: {
+          httpOnly: true,
+          sameSite: "lax",
+          path: "/",
+          secure: true,
+          domain: "spotify.lukenneth.com",
+        },
       },
     },
   },
