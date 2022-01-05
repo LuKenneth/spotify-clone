@@ -25,6 +25,10 @@ async function refreshAccessToken(token) {
     };
   }
 }
+const hostName = new URL(process.env.NEXTAUTH_URL).hostname;
+const useSecure = process.env.NEXTAUTH_URL.startsWith("https://");
+const cookiePrefix = hostName === "localhost" ? "" : "__Secure-";
+const hostCookiePrefix = hostName === "localhost" ? "" : "Host-";
 
 export default NextAuth({
   // Configure one or more authentication providers
@@ -42,51 +46,51 @@ export default NextAuth({
   },
   cookies: {
     sessionToken: {
-      name: `__Secure-next-auth.session-token`,
+      name: `${cookiePrefix}next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
-        secure: true,
-        domain: "spotify.lukenneth.com",
+        secure: useSecure,
+        domain: hostName,
       },
       callbackUrl: {
-        name: `__Secure-next-auth.callback-url`,
+        name: `${cookiePrefix}next-auth.callback-url`,
         options: {
           sameSite: "lax",
           path: "/",
-          secure: true,
-          domain: "spotify.lukenneth.com",
+          secure: useSecure,
+          domain: hostName,
         },
       },
       csrfToken: {
-        name: `__Host-next-auth.csrf-token`,
+        name: `${hostCookiePrefix}next-auth.csrf-token`,
         options: {
           httpOnly: true,
           sameSite: "lax",
           path: "/",
-          secure: true,
-          domain: "spotify.lukenneth.com",
+          secure: useSecure,
+          domain: hostName,
         },
       },
       pkceCodeVerifier: {
-        name: `__Secure-next-auth.pkce.code_verifier`,
+        name: `${cookiePrefix}next-auth.pkce.code_verifier`,
         options: {
           httpOnly: true,
           sameSite: "lax",
           path: "/",
-          secure: true,
-          domain: "spotify.lukenneth.com",
+          secure: useSecure,
+          domain: hostName,
         },
       },
       state: {
-        name: `__Secure-next-auth.state`,
+        name: `${cookiePrefix}next-auth.state`,
         options: {
           httpOnly: true,
           sameSite: "lax",
           path: "/",
-          secure: true,
-          domain: "spotify.lukenneth.com",
+          secure: useSecure,
+          domain: hostName,
         },
       },
     },
