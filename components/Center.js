@@ -25,6 +25,7 @@ function Center() {
   const [color, setColor] = useState(null);
   const playlistId = useRecoilValue(playlistIdState);
   const [playlist, setPlaylist] = useRecoilState(playlistState);
+  const [playlistOwner, setPlaylistOwner] = useState(null);
 
   useEffect(() => {
     setColor(shuffle(colors).pop());
@@ -37,6 +38,10 @@ function Center() {
           playlistId
         );
         setPlaylist(currentPlaylist);
+        const { body: playlistOwner } = await spotifyApi.getUser(
+          currentPlaylist?.owner.id
+        );
+        setPlaylistOwner(playlistOwner);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
           signIn();
@@ -84,10 +89,22 @@ function Center() {
           </h1>
           <p className="pt-4 sm text-gray-300">{playlist?.description}</p>
           <p className="pt-1">
-            {playlist?.owner.display_name},{" "}
-            <span className="sm text-gray-300">
-              {playlist?.followers.total} likes, {playlist?.tracks.total} songs
-            </span>
+            <div className="flex items-center">
+              <img
+                src={playlistOwner?.images?.[0].url}
+                alt=""
+                className="h-5 w-5 rounded-full mr-1"
+              />
+              {playlist?.owner.display_name}
+              <span className="b p-1">&#183;</span>
+              <span className="sm text-gray-300">
+                {playlist?.followers.total} likes
+                <span className="b p-1">&#183;</span>
+                {playlist?.tracks.total}
+                <span className="b p-1">&#183;</span>
+                songs
+              </span>
+            </div>
           </p>
         </div>
       </section>
