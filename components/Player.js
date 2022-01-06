@@ -20,13 +20,16 @@ import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
 import useSongInfo from "../hooks/useSongInfo";
 import useSpotify from "../hooks/useSpotify";
 
+const DEFAULT_VOLUME = 80;
+
 function Player() {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
   const [currentTrackId, setCurrentTrackId] =
     useRecoilState(currentTrackIdState);
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
-  const [volume, setVolume] = useState(80);
+  const [volumeChanged, setVolumeChanged] = useState(false);
+  const [volume, setVolume] = useState(DEFAULT_VOLUME);
 
   const songInfo = useSongInfo();
   const fetchCurrentSong = () => {
@@ -66,11 +69,16 @@ function Player() {
     [500]
   );
 
+  function changeVolume(delta, newVolume) {
+    setVolumeChanged(true);
+    const changedVolume = newVolume ? newVolume + delta : volume + delta;
+    setVolume(changedVolume);
+  }
   useEffect(() => {
-    if (volume > 0 && volume < 100) {
+    if (volume > 0 && volume <= 100 && volumeChanged) {
       debouncedAdjustVolume(volume);
     }
-  }, [volume, spotifyApi]);
+  }, [volume]);
 
   return (
     <div
@@ -119,19 +127,21 @@ function Player() {
         <MicrophoneIcon className="button hover:text-white unsupported" />
         <DesktopComputerIcon className="button hover:text-white unsupported" />
         <VolumeDownIcon
-          onClick={() => volume > 0 && setVolume(volume - 10)}
+          onClick={() => changeVolume(-10)}
           className="button hover:text-white"
         />
         <input
           className="w-14 md:w-28"
           type="range"
           value={volume}
-          onChange={(e) => setVolume(Number(e.target.value))}
+          onChange={(e) =>
+            volume > 0 && changeVolume(0, Number(e.target.value))
+          }
           min={0}
           max={100}
         />
         <VolumeUpIcon
-          onClick={() => volume < 100 && setVolume(volume + 10)}
+          onClick={() => volume < 100 && changeVolume(10)}
           className="button hover:text-white"
         />
       </div>

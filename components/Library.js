@@ -20,7 +20,6 @@ function Library() {
         const { body: savedTracks } = await spotifyApi.getMySavedTracks(
           session?.user?.id
         );
-        console.log(savedTracks);
         setTracks(savedTracks);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
@@ -33,7 +32,6 @@ function Library() {
     if (spotifyApi.getAccessToken()) {
       if (centerStateView === "library") {
         getTracks();
-        console.log("session", session);
       }
     }
   }, [spotifyApi, centerStateView]);

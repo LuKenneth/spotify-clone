@@ -42,7 +42,7 @@ function CenterHeader({
             {playlistName}
           </h1>
           <p className="pt-4 sm text-gray-300">{description}</p>
-          <p className="pt-1">
+          <div className="pt-1">
             <div className="flex items-center">
               <img
                 src={ownerImage}
@@ -64,7 +64,7 @@ function CenterHeader({
                 </span>
               </span>
             </div>
-          </p>
+          </div>
         </div>
       </section>
 
