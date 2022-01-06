@@ -15,4 +15,9 @@
   .thin-stroke path {
     stroke-width: 1 !important;
   }
+
+  .unsupported {
+    cursor: auto;
+    pointer-events: none;
+  }
 }

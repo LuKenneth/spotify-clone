@@ -45,32 +45,32 @@ function Sidebar() {
     >
       <div className="space-y-4">
         {/* navigation section */}
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button className="flex items-center space-x-2 hover:text-white unsupported">
           <HomeIcon className="h-5 w-5" />
           <p>Home</p>
         </button>
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button className="flex items-center space-x-2 hover:text-white unsupported">
           <SearchIcon className="h-5 w-5" />
           <p>Search</p>
         </button>
-        <button
-          className="flex items-center space-x-2 hover:text-white"
-          onClick={() => setCenterStateView("library")}
-        >
+        <button className="flex items-center space-x-2 hover:text-white unsupported">
           <LibraryIcon className="h-5 w-5" />
           <p>Your Library</p>
         </button>
         <hr className="border-t-[0.1px] border-gray-800" />
         {/* navigation section 2 */}
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button className="flex items-center space-x-2 hover:text-white unsupported">
           <PlusCircleIcon className="h-5 w-5" />
           <p>Create Playlist</p>
         </button>
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button
+          className="flex items-center space-x-2 hover:text-white"
+          onClick={() => setCenterStateView("library")}
+        >
           <HeartIcon className="h-5 w-5 text-green-500" />
           <p>Liked Songs</p>
         </button>
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button className="flex items-center space-x-2 hover:text-white unsupported">
           <RssIcon className="h-5 w-5 text-blue-500" />
           <p>Your Episodes</p>
         </button>

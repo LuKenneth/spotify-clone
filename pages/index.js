@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import Head from "next/head";
+import Script from "next/script";
 import Center from "../components/Center";
 import Main from "../components/Main";
 import Player from "../components/Player";
@@ -20,6 +21,15 @@ export default function Home() {
       <div className="sticky bottom-0">
         <Player />
       </div>
+      {/* <Script>{`window.onload = function() {
+        var el = document.getElementsByClassName('unsupported');
+        for(var i = 0; i < el.length; i++) {
+            var anchor = el[i];
+            anchor.onclick = function() {
+                alert('This feature has not yet been implemented, sorry!');
+            }
+        }
+    }`}</Script> */}
     </div>
   );
 }

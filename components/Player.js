@@ -91,9 +91,9 @@ function Player() {
       </div>
       {/* Center */}
       <div className="flex items-center justify-evenly text-gray-500">
-        <SwitchHorizontalIcon className="button ml-auto hover:text-white" />
+        <SwitchHorizontalIcon className="button ml-auto hover:text-white unsupported" />
         <RewindIcon
-          className="button pl-2 w-10 hover:text-white"
+          className="button pl-2 w-10 hover:text-white unsupported"
           //   onClick={() => spotifyApi.skipToPrevious()}
         />
         {isPlaying ? (
@@ -108,16 +108,16 @@ function Player() {
           />
         )}
         <FastForwardIcon
-          className="button pr-2 w-10 hover:text-white"
+          className="button pr-2 w-10 hover:text-white unsupported"
           onClick={() => spotifyApi.skipToNext()}
         />
-        <ReplyIcon className="button mr-auto hover:text-white" />
+        <ReplyIcon className="button mr-auto hover:text-white unsupported" />
       </div>
 
       {/* Right */}
       <div className=" text-gray-500 flex items-center space-x-3 md:space-x-4 justify-end">
-        <MicrophoneIcon className="button hover:text-white" />
-        <DesktopComputerIcon className="button hover:text-white" />
+        <MicrophoneIcon className="button hover:text-white unsupported" />
+        <DesktopComputerIcon className="button hover:text-white unsupported" />
         <VolumeDownIcon
           onClick={() => volume > 0 && setVolume(volume - 10)}
           className="button hover:text-white"
