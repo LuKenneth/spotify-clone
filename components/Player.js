@@ -38,16 +38,15 @@ function Player() {
       spotifyApi.getMyCurrentPlayingTrack().then((data) => {
         setCurrentTrackId(data.body?.item?.id);
       });
-
-      spotifyApi.getMyCurrentPlaybackState().then((data) => {
-        setActiveDevice(data.body?.device?.name);
-        setIsPlaying(data.body?.is_playing);
-      });
     }
+    spotifyApi.getMyCurrentPlaybackState().then((data) => {
+      setActiveDevice(data.body?.device?.name);
+      setIsPlaying(data.body?.is_playing);
+    });
   };
 
   useEffect(() => {
-    if (spotifyApi.getAccessToken() && !currentTrackId) {
+    if (spotifyApi.getAccessToken()) {
       fetchCurrentSong();
     }
   }, [currentTrackId, spotifyApi, session]);
