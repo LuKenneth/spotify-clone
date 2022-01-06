@@ -1,3 +1,4 @@
+import { PlayIcon } from "@heroicons/react/solid";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
@@ -21,15 +22,26 @@ function Song({ track, order }) {
 
   return (
     <div
-      className="grid grid-cols-2 text-gray-500 py-[2px] px-2 hover:bg-gray-800 
+      className="group grid grid-cols-2 text-gray-500 px-4 py-[2px] hover:bg-gray-800 
       rounded-lg cursor-pointer"
       onClick={playSong}
     >
-      <div className="flex items-center space-x-4 py-[2px]">
-        <p className="text-right text-gray-400 w-[20px]">{order}</p>
+      <div className="flex items-center space-x-2 py-[2px]">
+        <div className="text-center text-gray-400 w-[20px] group-hover:hidden">
+          {order}
+        </div>
+        <div className="!ml-0 text-gray-400 w-[20px] group-hover:inline hidden">
+          <PlayIcon className="text-white" />
+        </div>
         <img className="h-10 w-10" src={track.album.images?.[0].url} alt="" />
         <div>
-          <p className="w-36 lg:w-64 truncate text-white">{track.name}</p>
+          <p
+            className={`w-36 lg:w-64 truncate text-${
+              currentTrackId == track.id ? "green-500" : "white"
+            }`}
+          >
+            {track.name}
+          </p>
           <p className="w-40">{track.artists[0].name}</p>
         </div>
       </div>

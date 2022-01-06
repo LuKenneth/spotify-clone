@@ -7,4 +7,12 @@
     @apply h-5 w-5 cursor-pointer hover:scale-125 transition 
     transform duration-100 ease-out;
   }
+
+  .subheader-button {
+    @apply h-10 w-10 thin-stroke cursor-pointer hover:text-white;
+  }
+
+  .thin-stroke path {
+    stroke-width: 1 !important;
+  }
 }

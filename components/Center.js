@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from "@heroicons/react/outline";
+import { ChevronDownIcon, PlayIcon } from "@heroicons/react/outline";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import _, { shuffle } from "lodash";
@@ -7,6 +7,7 @@ import { playlistIdState, playlistState } from "../atoms/playlistsAtom";
 import useSpotify from "../hooks/useSpotify";
 import Songs from "./Songs";
 import { ClockIcon } from "@heroicons/react/outline";
+import PlaylistSubHeader from "./PlaylistSubHeader";
 
 const colors = [
   "from-indigo-500",
@@ -37,7 +38,7 @@ function Center() {
         );
         setPlaylist(currentPlaylist);
       } catch (err) {
-        if (err.body.error?.message === "The access token expired") {
+        if (err.body?.error?.message === "The access token expired") {
           signIn();
         } else {
           console.log("unknown error occurred", err);
@@ -91,9 +92,15 @@ function Center() {
         </div>
       </section>
 
+      <PlaylistSubHeader />
+
       <div>
-        <div className="flex text-gray-300 text-sm grid grid-cols-2 p-2 px-8 mx-4">
-          <p className="w-36 lg:w-64"># TITLE</p>
+        <div className="flex text-gray-400 text-sm grid grid-cols-2 p-2 px-8 mx-4">
+          <div className="flex flex-r w-36 lg:w-64">
+            <p className="mr-4 ml-2">#</p>
+            <p>TITLE</p>
+          </div>
+
           <div className="flex items-center justify-between ml-auto md:ml-0">
             <p className="w-40 hidden md:inline">ALBUM</p>
             <ClockIcon className="h-5 w-5" />

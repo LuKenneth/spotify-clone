@@ -23,7 +23,7 @@ function Sidebar() {
         const { body } = await spotifyApi.getUserPlaylists();
         setPlaylists(body.items);
       } catch (err) {
-        if (err.body.error?.message === "The access token expired") {
+        if (err.body?.error?.message === "The access token expired") {
           signIn();
         } else {
           console.log("unknown error occurred", err);
