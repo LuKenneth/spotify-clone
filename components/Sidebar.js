@@ -10,12 +10,14 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import useSpotify from "../hooks/useSpotify";
 import { playlistIdState } from "../atoms/playlistsAtom";
+import { centerState } from "../atoms/CenterAtom";
 
 function Sidebar() {
   const spotifyApi = useSpotify();
-  const { data: session, state } = useSession();
+  const { data: session } = useSession();
   const [playlists, setPlaylists] = useState([]);
   const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
+  const [centerStateView, setCenterStateView] = useRecoilState(centerState);
 
   useEffect(() => {
     const getPlaylists = async () => {
@@ -51,7 +53,10 @@ function Sidebar() {
           <SearchIcon className="h-5 w-5" />
           <p>Search</p>
         </button>
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button
+          className="flex items-center space-x-2 hover:text-white"
+          onClick={() => setCenterStateView("library")}
+        >
           <LibraryIcon className="h-5 w-5" />
           <p>Your Library</p>
         </button>
@@ -76,7 +81,10 @@ function Sidebar() {
           <p
             key={playlist.id}
             className="cursor-pointer hover:text-white"
-            onClick={() => setPlaylistId(playlist.id)}
+            onClick={() => {
+              setPlaylistId(playlist.id);
+              setCenterStateView("playlist");
+            }}
           >
             {playlist.name}
           </p>
