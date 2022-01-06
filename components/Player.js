@@ -1,6 +1,7 @@
 import {
-  HeartIcon,
   VolumeUpIcon as VolumeDownIcon,
+  MicrophoneIcon,
+  DesktopComputerIcon,
 } from "@heroicons/react/outline";
 import {
   RewindIcon,
@@ -73,45 +74,53 @@ function Player() {
 
   return (
     <div
-      className="h-24 bg-gradient-to-b from-black to-gray-900 border-t-[2px] border-gray-900
+      className="h-24 bg-[#181818] border-t-[1px] border-gray-800
     grid grid-cols-3 text-xs md:text-base px-2 md:px-8 text-white"
     >
       {/* Left */}
       <div className="flex items-center space-x-4">
         <img
-          className="hidden md:inline h-10 w-10"
+          className="hidden md:inline h-[60px] w-[60px]"
           src={songInfo?.album?.images?.[0]?.url}
           alt=""
         />
-        <div>
+        <div className="text-sm">
           <h3>{songInfo?.name}</h3>
           <p className="text-gray-500">{songInfo?.artists?.[0].name}</p>
         </div>
       </div>
       {/* Center */}
-      <div className="flex items-center justify-evenly">
-        <SwitchHorizontalIcon className="button" />
+      <div className="flex items-center justify-evenly text-gray-500">
+        <SwitchHorizontalIcon className="button ml-auto hover:text-white" />
         <RewindIcon
-          className="button"
+          className="button pl-2 w-10 hover:text-white"
           //   onClick={() => spotifyApi.skipToPrevious()}
         />
         {isPlaying ? (
-          <PauseIcon className="button w-10 h-10" onClick={handlePlayPause} />
+          <PauseIcon
+            className="button w-20 h-20 px-3 text-white"
+            onClick={handlePlayPause}
+          />
         ) : (
-          <PlayIcon className="button w-10 h-10" onClick={handlePlayPause} />
+          <PlayIcon
+            className="button w-20 h-20 px-3 text-white"
+            onClick={handlePlayPause}
+          />
         )}
         <FastForwardIcon
-          className="button"
+          className="button pr-2 w-10 hover:text-white"
           onClick={() => spotifyApi.skipToNext()}
         />
-        <ReplyIcon className="button" />
+        <ReplyIcon className="button mr-auto hover:text-white" />
       </div>
 
       {/* Right */}
-      <div className="flex items-center space-x-3 md:space-x-4 justify-end">
+      <div className=" text-gray-500 flex items-center space-x-3 md:space-x-4 justify-end">
+        <MicrophoneIcon className="button hover:text-white" />
+        <DesktopComputerIcon className="button hover:text-white" />
         <VolumeDownIcon
           onClick={() => volume > 0 && setVolume(volume - 10)}
-          className="button"
+          className="button hover:text-white"
         />
         <input
           className="w-14 md:w-28"
@@ -123,7 +132,7 @@ function Player() {
         />
         <VolumeUpIcon
           onClick={() => volume < 100 && setVolume(volume + 10)}
-          className="button"
+          className="button hover:text-white"
         />
       </div>
     </div>

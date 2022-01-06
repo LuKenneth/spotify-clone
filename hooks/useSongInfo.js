@@ -21,8 +21,13 @@ function useSongInfo() {
           }
         ).then((res) => res.json());
         setSongInfo(trackInfo);
+        localStorage.setItem("last_trackId", currentTrackId);
       }
     };
+    if (!currentTrackId) {
+      const savedTrack = localStorage.getItem("last_trackId");
+      setCurrentTrackId(savedTrack);
+    }
     fetchSongInfo();
   }, [currentTrackId, spotifyApi]);
 

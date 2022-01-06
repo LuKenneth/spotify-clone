@@ -6,6 +6,7 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import { playlistIdState, playlistState } from "../atoms/playlistsAtom";
 import useSpotify from "../hooks/useSpotify";
 import Songs from "./Songs";
+import { ClockIcon } from "@heroicons/react/outline";
 
 const colors = [
   "from-indigo-500",
@@ -36,7 +37,7 @@ function Center() {
         );
         setPlaylist(currentPlaylist);
       } catch (err) {
-        if (err.body.error.message === "The access token expired") {
+        if (err.body.error?.message === "The access token expired") {
           signIn();
         } else {
           console.log("unknown error occurred", err);
@@ -67,7 +68,7 @@ function Center() {
       </header>
 
       <section
-        className={`flex items-end space-x-7 bg-gradient-to-b to-black 
+        className={`flex items-end space-x-7 bg-gradient-to-b to-[#181818] 
         ${color} h-80 text-white p-8`}
       >
         <img
@@ -91,6 +92,14 @@ function Center() {
       </section>
 
       <div>
+        <div className="flex text-gray-300 text-sm grid grid-cols-2 p-2 px-8 mx-4">
+          <p className="w-36 lg:w-64"># TITLE</p>
+          <div className="flex items-center justify-between ml-auto md:ml-0">
+            <p className="w-40 hidden md:inline">ALBUM</p>
+            <ClockIcon className="h-5 w-5" />
+          </div>
+        </div>
+
         <hr className="border-t-[0.1px] border-gray-700 p-2 mx-4" />
         <Songs />
       </div>
