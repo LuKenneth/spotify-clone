@@ -34,6 +34,9 @@ function Sidebar() {
     };
     if (spotifyApi.getAccessToken()) {
       getPlaylists();
+    } else {
+      alert("Session expired, please sign in again.");
+      signIn();
     }
   }, [session, spotifyApi]);
 

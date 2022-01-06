@@ -56,7 +56,14 @@ function Player() {
         spotifyApi.pause();
         setIsPlaying(false);
       } else {
-        spotifyApi.play();
+        spotifyApi.play().catch((err) => {
+          if (err.body.error.reason === "NO_ACTIVE_DEVICE") {
+            setIsPlaying(false);
+            alert(
+              "Cannot find an active player. Please use spotify on another device before continuing. This app is simply a remote."
+            );
+          }
+        });
         setIsPlaying(true);
       }
     });

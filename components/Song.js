@@ -14,9 +14,18 @@ function Song({ track, order }) {
   const playSong = () => {
     setCurrentTrackId(track.id);
     setIsPlaying(true);
-    spotifyApi.play({
-      uris: [track.uri],
-    });
+    spotifyApi
+      .play({
+        uris: [track.uri],
+      })
+      .catch((err) => {
+        if (err.body.error.reason === "NO_ACTIVE_DEVICE") {
+          setIsPlaying(false);
+          alert(
+            "Cannot find an active player. Please use spotify on another device before continuing. This app is simply a remote."
+          );
+        }
+      });
   };
   useEffect(() => {}, []);
 
