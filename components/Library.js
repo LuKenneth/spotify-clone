@@ -17,10 +17,10 @@ function Library() {
   useEffect(() => {
     const getTracks = async () => {
       try {
-        const { body: savedTracks } = await spotifyApi.getMySavedTracks(
-          session?.user?.id
-        );
-        setTracks(savedTracks);
+        // const data = await spotifyApi.getMySavedTracks(session?.user?.id);
+        const data = { body: {} };
+        console.log(`getMySavedTracks`, data);
+        setTracks(data.body);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
           signIn();
@@ -29,7 +29,7 @@ function Library() {
         }
       }
     };
-    if (spotifyApi.getAccessToken()) {
+    if (true) {
       if (centerStateView === "library") {
         getTracks();
       }

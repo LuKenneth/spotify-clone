@@ -22,8 +22,12 @@ function Sidebar() {
   useEffect(() => {
     const getPlaylists = async () => {
       try {
-        const { body } = await spotifyApi.getUserPlaylists();
-        setPlaylists(body.items);
+        // const data = await spotifyApi.getUserPlaylists();
+        const data = await fetch("/api/spotify/playlists").then((res) =>
+          res.json()
+        );
+        console.log("getUserPlaylists", data);
+        setPlaylists(data);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
           signIn();
@@ -32,7 +36,7 @@ function Sidebar() {
         }
       }
     };
-    if (spotifyApi.getAccessToken()) {
+    if (true) {
       getPlaylists();
     } else {
       alert("Session expired, please sign in again.");

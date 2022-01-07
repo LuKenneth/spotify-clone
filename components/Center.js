@@ -19,10 +19,12 @@ function Center() {
   useEffect(() => {
     const getPlaylist = async () => {
       try {
-        const { body: currentPlaylist } = await spotifyApi.getPlaylist(
-          playlistId
+        const data = await fetch(`/api/spotify/playlist/${playlistId}`).then(
+          (res) => res.json()
         );
-        setPlaylist(currentPlaylist);
+        console.log(data);
+        const currentPlaylist = { ...data };
+        setPlaylist({ ...data });
         const { body: playlistOwner } = await spotifyApi.getUser(
           currentPlaylist?.owner.id
         );
@@ -35,7 +37,7 @@ function Center() {
         }
       }
     };
-    if (spotifyApi.getAccessToken()) {
+    if (true) {
       if (centerStateView === "playlist") {
         getPlaylist();
       }
@@ -49,7 +51,7 @@ function Center() {
         playlistName={playlist?.name}
         description={playlist?.description}
         playlistImg={playlist?.images?.[0]?.url}
-        ownerImage={playlistOwner?.images?.[0].url}
+        ownerImage={playlistOwner?.images?.[0]?.url}
         ownerName={playlist?.owner.display_name}
         likes={playlist?.followers.total}
         trackCount={playlist?.tracks.total}

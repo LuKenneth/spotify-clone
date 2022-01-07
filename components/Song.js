@@ -20,10 +20,10 @@ function Song({ track, order }) {
       })
       .catch((err) => {
         if (err.body.error.reason === "NO_ACTIVE_DEVICE") {
-          setIsPlaying(false);
-          alert(
-            "Cannot find an active player. Please use spotify on another device before continuing. This app is simply a remote."
-          );
+          // setIsPlaying(false);
+          // alert(
+          //   "Cannot find an active player. Please use spotify on another device before continuing. This app is simply a remote."
+          // );
         }
       });
   };
@@ -42,7 +42,7 @@ function Song({ track, order }) {
         <div className="!ml-0 text-gray-400 w-[20px] group-hover:inline hidden">
           <PlayIcon className="text-white" />
         </div>
-        <img className="h-10 w-10" src={track.album.images?.[0].url} alt="" />
+        <img className="h-10 w-10" src={track.album.images?.[0]?.url} alt="" />
         <div>
           <p
             className={`w-36 lg:w-64 truncate text-${
