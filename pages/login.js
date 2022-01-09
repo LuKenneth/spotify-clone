@@ -17,11 +17,18 @@ function Login({ providers }) {
       <div className="text-white p-4 flex flex-col items-center">
         <p>You need prior authorization via email by me (Luke) to access.</p>
         <a
+          href="https://demo.spotify.lukenneth.com"
+          className="text-white underline p-2 cursor-pointer"
+          target="_blank"
+        >
+          click here to use a demo version of the app
+        </a>
+        <a
           href="https://lukenneth.com/spotify"
           className="text-white underline p-2 cursor-pointer"
           target="_blank"
         >
-          click here to view a quick demo video at https://lukenneth.com/spotify
+          or view a demo video here
         </a>
       </div>
     </div>
