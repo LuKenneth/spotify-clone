@@ -1,31 +1,33 @@
 import { PlayIcon } from "@heroicons/react/solid";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
-import useSpotify from "../hooks/useSpotify";
+import { currentTrackState, isPlayingState } from "../atoms/songAtom";
 import { millisToMinutesAndSeconds } from "../lib/time";
 
 function Song({ track, order }) {
-  const spotifyApi = useSpotify();
-  const [currentTrackId, setCurrentTrackId] =
-    useRecoilState(currentTrackIdState);
+  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackState);
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
 
   const playSong = () => {
-    setCurrentTrackId(track.id);
+    setCurrentTrack({
+      id: track.id,
+      name: track.name,
+      artist: track.artists[0].name,
+      image: track.album.images[0].url,
+    });
     setIsPlaying(true);
-    spotifyApi
-      .play({
-        uris: [track.uri],
-      })
-      .catch((err) => {
-        if (err.body.error.reason === "NO_ACTIVE_DEVICE") {
-          // setIsPlaying(false);
-          // alert(
-          //   "Cannot find an active player. Please use spotify on another device before continuing. This app is simply a remote."
-          // );
-        }
-      });
+    // spotifyApi
+    //   .play({
+    //     uris: [track.uri],
+    //   })
+    //   .catch((err) => {
+    //     if (err.body.error.reason === "NO_ACTIVE_DEVICE") {
+    //       // setIsPlaying(false);
+    //       // alert(
+    //       //   "Cannot find an active player. Please use spotify on another device before continuing. This app is simply a remote."
+    //       // );
+    //     }
+    //   });
   };
   useEffect(() => {}, []);
 
@@ -46,7 +48,7 @@ function Song({ track, order }) {
         <div>
           <p
             className={`w-36 lg:w-64 truncate text-${
-              currentTrackId == track.id ? "green-500" : "white"
+              currentTrack == track.id ? "green-500" : "white"
             }`}
           >
             {track.name}

@@ -8,12 +8,10 @@ import {
 import { HeartIcon, RssIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import useSpotify from "../hooks/useSpotify";
 import { playlistIdState } from "../atoms/playlistsAtom";
 import { centerState } from "../atoms/CenterAtom";
 
 function Sidebar() {
-  const spotifyApi = useSpotify();
   const { data: session } = useSession();
   const [playlists, setPlaylists] = useState([]);
   const [playlistId, setPlaylistId] = useRecoilState(playlistIdState);
@@ -26,7 +24,6 @@ function Sidebar() {
         const data = await fetch("/api/spotify/playlists").then((res) =>
           res.json()
         );
-        console.log("getUserPlaylists", data);
         setPlaylists(data);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
@@ -42,7 +39,7 @@ function Sidebar() {
       alert("Session expired, please sign in again.");
       signIn();
     }
-  }, [session, spotifyApi]);
+  }, [session]);
 
   return (
     <div

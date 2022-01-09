@@ -1,7 +1,6 @@
 import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import useSpotify from "../hooks/useSpotify";
 import Songs from "./Songs";
 import { centerState } from "../atoms/CenterAtom";
 import CenterHeader from "./CenterHeader";
@@ -9,7 +8,6 @@ import SongsHeader from "./SongsHeader";
 import UserPill from "./UserPill";
 
 function Library() {
-  const spotifyApi = useSpotify();
   const centerStateView = useRecoilValue(centerState);
   const { data: session } = useSession();
   const [tracks, setTracks] = useState([]);
@@ -17,10 +15,10 @@ function Library() {
   useEffect(() => {
     const getTracks = async () => {
       try {
-        // const data = await spotifyApi.getMySavedTracks(session?.user?.id);
-        const data = { body: {} };
-        console.log(`getMySavedTracks`, data);
-        setTracks(data.body);
+        const data = await fetch(`/api/spotify/playlist/library`).then((res) =>
+          res.json()
+        );
+        setTracks(data);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
           signIn();
@@ -34,7 +32,7 @@ function Library() {
         getTracks();
       }
     }
-  }, [spotifyApi, centerStateView]);
+  }, [centerStateView]);
 
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">

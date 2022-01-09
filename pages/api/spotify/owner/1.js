@@ -13,7 +13,7 @@ export default function helloAPI(req, res) {
     images: [
       {
         height: null,
-        url: "https://i.scdn.co/image/ab6775700000ee8555c25988a6ac314394d3fbf5",
+        url: "https://i.scdn.co/image/ab6775700000ee853dcda3826f553be92b0b1b63",
         width: null,
       },
     ],

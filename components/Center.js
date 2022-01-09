@@ -2,7 +2,6 @@ import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { playlistIdState, playlistState } from "../atoms/playlistsAtom";
-import useSpotify from "../hooks/useSpotify";
 import Songs from "./Songs";
 import { centerState } from "../atoms/CenterAtom";
 import CenterHeader from "./CenterHeader";
@@ -10,7 +9,6 @@ import SongsHeader from "./SongsHeader";
 import UserPill from "./UserPill";
 
 function Center() {
-  const spotifyApi = useSpotify();
   const playlistId = useRecoilValue(playlistIdState);
   const [playlist, setPlaylist] = useRecoilState(playlistState);
   const [playlistOwner, setPlaylistOwner] = useState(null);
@@ -22,18 +20,16 @@ function Center() {
         const data = await fetch(`/api/spotify/playlist/${playlistId}`).then(
           (res) => res.json()
         );
-        console.log(data);
         const currentPlaylist = { ...data };
         setPlaylist({ ...data });
-        const { body: playlistOwner } = await spotifyApi.getUser(
-          currentPlaylist?.owner.id
-        );
+        const playlistOwner = await fetch(
+          `/api/spotify/owner/${currentPlaylist?.owner.id}`
+        ).then((res) => res.json());
         setPlaylistOwner(playlistOwner);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
           signIn();
         } else {
-          console.log("unknown error occurred", err);
         }
       }
     };
@@ -42,7 +38,7 @@ function Center() {
         getPlaylist();
       }
     }
-  }, [playlistId, spotifyApi, centerStateView]);
+  }, [playlistId, centerStateView]);
 
   return (
     <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">

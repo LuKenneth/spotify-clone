@@ -1,15 +1,15 @@
 export default function helloAPI(req, res) {
   res.status(200).json({
-    display_name: "Spotify",
+    display_name: "Luke Patterson",
     external_urls: {
-      spotify: "https://open.spotify.com/user/spotify",
+      spotify: "https://open.spotify.com/user/1244247689",
     },
     followers: {
       href: null,
-      total: 10424880,
+      total: 32,
     },
-    href: "https://api.spotify.com/v1/users/spotify",
-    id: "spotify",
+    href: "https://api.spotify.com/v1/users/1244247689",
+    id: "1244247689",
     images: [
       {
         height: null,
@@ -18,6 +18,6 @@ export default function helloAPI(req, res) {
       },
     ],
     type: "user",
-    uri: "spotify:user:spotify",
+    uri: "spotify:user:1244247689",
   });
 }

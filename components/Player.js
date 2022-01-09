@@ -16,71 +16,23 @@ import { debounce } from "lodash";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { currentTrackIdState, isPlayingState } from "../atoms/songAtom";
-import useSongInfo from "../hooks/useSongInfo";
-import useSpotify from "../hooks/useSpotify";
+import { currentTrackState, isPlayingState } from "../atoms/songAtom";
 
 const DEFAULT_VOLUME = 80;
 
 function Player() {
-  const spotifyApi = useSpotify();
-  const { data: session, status } = useSession();
-  const [currentTrackId, setCurrentTrackId] =
-    useRecoilState(currentTrackIdState);
+  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackState);
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [volumeChanged, setVolumeChanged] = useState(false);
   const [volume, setVolume] = useState(DEFAULT_VOLUME);
   const [activeDevice, setActiveDevice] = useState("demo device.");
 
-  const songInfo = useSongInfo();
-  const fetchCurrentSong = async () => {
-    if (!songInfo) {
-      const data = await fetch("/api/spotify/currently-playing").then((res) =>
-        res.json()
-      );
-      setCurrentTrackId(data.item?.id);
-      console.log(`getMyCurrentPlayingTrack`, data);
-      // spotifyApi.getMyCurrentPlayingTrack().then((data) => {
-      //   console.log(`getMyCurrentPlayingTrack`, data);
-      //   setCurrentTrackId(data.body?.item?.id);
-      // });
-    }
-    // spotifyApi.getMyCurrentPlaybackState().then((data) => {
-    // console.log(`getMyCurrentPlaybackState`, data);
-    // setActiveDevice(data.body?.device?.name);
-    // setIsPlaying(data.body?.is_playing);
-    // });
-  };
-
-  useEffect(() => {
-    if (true) {
-      fetchCurrentSong();
-    }
-  }, [currentTrackId, spotifyApi, session]);
-
   function handlePlayPause() {
-    // spotifyApi.getMyCurrentPlaybackState().then((data) => {
-    if (isPlaying) {
-      // spotifyApi.pause();
-      setIsPlaying(false);
-    } else {
-      // spotifyApi.play().catch((err) => {
-      // if (err.body.error.reason === "NO_ACTIVE_DEVICE") {
-      // setIsPlaying(false);
-      // alert(
-      //   "Cannot find an active player. Please use spotify on another device before continuing. This app is simply a remote."
-      // );
-      //   }
-      // });
-      setIsPlaying(true);
-    }
-    // });
+    setIsPlaying(!isPlaying);
   }
 
   const debouncedAdjustVolume = useCallback(
-    debounce((volume) => {
-      spotifyApi.setVolume(volume).catch((err) => {});
-    }, 500),
+    debounce(() => {}, 500),
     [500]
   );
 
@@ -105,12 +57,12 @@ function Player() {
         <div className="flex items-center space-x-4">
           <img
             className="hidden md:inline h-[60px] w-[60px]"
-            src={songInfo?.album?.images?.[0]?.url}
+            src={currentTrack?.image}
             alt=""
           />
           <div className="text-sm">
-            <h3>{songInfo?.name}</h3>
-            <p className="text-gray-500">{songInfo?.artists?.[0]?.name}</p>
+            <h3>{currentTrack?.name}</h3>
+            <p className="text-gray-500">{currentTrack?.artist}</p>
           </div>
         </div>
         {/* Center */}

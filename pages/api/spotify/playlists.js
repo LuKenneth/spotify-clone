@@ -48,11 +48,11 @@ export default function helloAPI(req, res) {
       images: [
         {
           height: null,
-          url: "https://i.scdn.co/image/ab67706c0000bebb3422a79eea3aeae0488226e5",
+          url: "https://images.theconversation.com/files/20706/original/dkkvsc9j-1361934641.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip",
           width: null,
         },
       ],
-      name: "shaw moves to indy",
+      name: "Summer favorites",
       owner: {
         display_name: "Luke Patterson",
         external_urls: {
