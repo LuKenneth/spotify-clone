@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="tracking-wide text-sm bg-[#121212] h-screen overflow-hidden ">
       <Head>
-        <title>Spotify</title>
+        <title>Demo Spotify</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex">

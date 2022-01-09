@@ -1,4 +1,3 @@
-import { signIn, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import Songs from "./Songs";
@@ -9,7 +8,6 @@ import UserPill from "./UserPill";
 
 function Library() {
   const centerStateView = useRecoilValue(centerState);
-  const { data: session } = useSession();
   const [tracks, setTracks] = useState([]);
 
   useEffect(() => {
@@ -21,7 +19,6 @@ function Library() {
         setTracks(data);
       } catch (err) {
         if (err.body?.error?.message === "The access token expired") {
-          signIn();
         } else {
           console.log("unknown error occurred", err);
         }
@@ -43,8 +40,10 @@ function Library() {
         playlistImg={
           "https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
         }
-        ownerImage={session?.user?.image}
-        ownerName={session?.user?.name}
+        ownerImage={
+          "https://i.scdn.co/image/ab6775700000ee853dcda3826f553be92b0b1b63"
+        }
+        ownerName={"Luke Patterson"}
         likes={-1}
         trackCount={tracks.total}
         customColor={"from-[#4e2eb5]"}
