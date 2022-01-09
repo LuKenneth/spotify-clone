@@ -9040,6 +9040,6 @@ export default function helloAPI(req, res) {
     next: "https://api.spotify.com/v1/me/tracks?offset=20&limit=20&locale=en-US,en;q=0.9,es;q=0.8,ja;q=0.7",
     offset: 0,
     previous: null,
-    total: 1327,
+    total: 20,
   });
 }
