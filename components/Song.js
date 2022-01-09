@@ -48,7 +48,7 @@ function Song({ track, order }) {
         <div>
           <p
             className={`w-36 lg:w-64 truncate text-${
-              currentTrack == track.id ? "green-500" : "white"
+              currentTrack.id == track.id ? "green-500" : "white"
             }`}
           >
             {track.name}

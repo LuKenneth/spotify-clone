@@ -13,9 +13,9 @@ import {
   FastForwardIcon,
 } from "@heroicons/react/solid";
 import { debounce } from "lodash";
-import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { playlistState } from "../atoms/playlistsAtom";
 import { currentTrackState, isPlayingState } from "../atoms/songAtom";
 
 const DEFAULT_VOLUME = 80;
@@ -26,6 +26,13 @@ function Player() {
   const [volumeChanged, setVolumeChanged] = useState(false);
   const [volume, setVolume] = useState(DEFAULT_VOLUME);
   const [activeDevice, setActiveDevice] = useState("demo device.");
+  const playlist = useRecoilValue(playlistState);
+  const tub = currentTrack.name === "Crying in the Tub";
+  const [trackIndex, setCurrentTrackIndex] = useState(tub ? 1 : 0);
+
+  useEffect(() => {
+    console.log(playlist);
+  }, [playlist]);
 
   function handlePlayPause() {
     setIsPlaying(!isPlaying);
@@ -70,7 +77,7 @@ function Player() {
           <SwitchHorizontalIcon className="button ml-auto hover:text-white unsupported" />
           <RewindIcon
             className="button pl-2 w-10 hover:text-white unsupported"
-            //   onClick={() => spotifyApi.skipToPrevious()}
+            // onClick={() => skipToPrevious()}
           />
           {isPlaying ? (
             <PauseIcon
@@ -85,7 +92,7 @@ function Player() {
           )}
           <FastForwardIcon
             className="button pr-2 w-10 hover:text-white unsupported"
-            // onClick={() => spotifyApi.skipToNext()}
+            // onClick={() => skipToNext()}
           />
           <ReplyIcon className="button mr-auto hover:text-white unsupported" />
         </div>
