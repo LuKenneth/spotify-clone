@@ -1,6 +1,16 @@
 export default function helloAPI(req, res) {
   res.status(200).json({
     href: "https://api.spotify.com/v1/me/tracks?offset=0&limit=20&locale=en-US,en;q=0.9,es;q=0.8,ja;q=0.7",
+    owner: {
+      display_name: "Luke Patterson",
+      external_urls: {
+        spotify: "https://open.spotify.com/user/1244247689",
+      },
+      href: "https://api.spotify.com/v1/users/1244247689",
+      id: "1",
+      type: "user",
+      uri: "spotify:user:1244247689",
+    },
     items: [
       {
         added_at: "2021-12-30T23:51:35Z",
